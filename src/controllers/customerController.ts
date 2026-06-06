@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { CustomerService } from '../services/customerService';
 import { error } from 'console';
+import { mapCustomer } from '../mappers/customerMapper';
 
 const service = new CustomerService();
 
@@ -32,7 +33,7 @@ export class CustomerController {
             req.body.lastName,
             req.body.email
         );
-        res.status(201).json(customer);
+        res.status(201).json(mapCustomer(customer));
         } 
           catch (error: any ) {
             throw error;
@@ -54,7 +55,7 @@ export class CustomerController {
             res: Response
         ) {
             const customers = await service.getAlllCustomers();
-            res.json(customers);
+            res.json(customers.map(mapCustomer));
         }
 
     async getById(
@@ -65,7 +66,7 @@ export class CustomerController {
         if (!customer) {
             return res.status(404).json({ message: 'Customer not found' });
         }
-        res.json(customer);
+        res.json(mapCustomer(customer));
     }
 
     async update(
@@ -76,7 +77,7 @@ export class CustomerController {
         if (!updatedCustomer) {
             return res.status(404).json({ message: 'Customer not found' });
         }
-        res.json(updatedCustomer);
+        res.json(mapCustomer(updatedCustomer));
     }
 
     async delete(
@@ -87,6 +88,6 @@ export class CustomerController {
         if (!deletedCustomer) {
             return res.status(404).json({ message: 'Customer not found' });
         }
-        res.json(deletedCustomer);
+        res.json(mapCustomer(deletedCustomer));
     }
 }
