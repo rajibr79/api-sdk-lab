@@ -249,6 +249,14 @@ components:
     Customer:
       type: object
 
+      required:
+        - id
+        - firstName
+        - lastName
+        - email
+        - createdAt
+        - updatedAt
+
       properties:
 
         id:
@@ -262,12 +270,15 @@ components:
 
         email:
           type: string
+          format: email
 
         createdAt:
           type: string
+          format: date-time
 
         updatedAt:
           type: string
+          format: date-time
 
     CreateCustomerRequest:
       type: object
